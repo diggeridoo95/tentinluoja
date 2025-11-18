@@ -2,24 +2,24 @@
 <html lang="fi">
 <head>
     <meta charset="UTF-8">
-    <title>AI Quiz</title>
+    <title>AI Tentti</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>AI Quiz</h1>
+        <h1>AI Tentti</h1>
         {% if not questions %}
             <p>Ei kysymyksiä. Palaa takaisin ja lataa teksti.</p>
             <a href="{{ url_for('index') }}">Takaisin</a>
         {% else %}
-            <form method="POST" action="{{ url_for('submit') }}">
+            <form id="quizForm" novalidate>
                 {% for q in questions %}
                     {% set qidx = loop.index %}
-                    <div class="question-block">
+                    <div class="question-block" data-correct="{{ q.correct_answer }}">
                         <p><strong>{{ qidx }}. {{ q.question }}</strong></p>
                         {% for opt in q.options %}
                             <div>
-                                <label for="q{{ qidx }}_opt{{ loop.index }}">
+                                <label class="option-label" for="q{{ qidx }}_opt{{ loop.index }}">
                                     <input id="q{{ qidx }}_opt{{ loop.index }}"
                                            type="radio"
                                            name="q{{ qidx }}"
@@ -27,12 +27,21 @@
                                 </label>
                             </div>
                         {% endfor %}
+                        <p class="feedback" aria-live="polite"></p>
                     </div>
                     <hr>
                 {% endfor %}
-                <button type="submit">Lähetä vastaukset</button>
+                <div class="controls">
+                    <button type="button" id="checkBtn">Tarkista vastaukset</button>
+                    <button type="button" id="resetBtn">Tyhjennä vastaukset</button>
+                    <!-- Paluu index-sivulle -->
+                    <button type="button" id="backBtn" onclick=location.href="{{ url_for('index') }}">Takaisin</button>
+                </div>
+
+                <div id="resultSummary" class="result" aria-live="polite"></div>
             </form>
         {% endif %}
     </div>
+    <script src="{{ url_for('static', filename='quiz.js') }}" defer></script>
 </body>
 </html>
