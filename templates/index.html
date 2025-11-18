@@ -14,6 +14,11 @@
         <form method="post" enctype="multipart/form-data">
             <label for="file">Valitse PDF tai TXT:</label><br>
             <input type="file" name="file" id="file" accept=".pdf,.txt" required><br><br>
+
+            <!-- uusi: kysymysten määrä -->
+            <label for="num_questions">Kysymysten määrä (5–20):</label><br>
+            <input type="number" id="num_questions" name="num_questions" min="5" max="20" value="5" required><br><br>
+
             <button type="submit">Luo tentti</button>
         </form>
     </div>

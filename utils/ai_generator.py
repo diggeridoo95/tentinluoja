@@ -21,9 +21,9 @@ model = genai.GenerativeModel(
     }
 )
 
-def generate_questions(text: str):
+def generate_questions(text: str, count: int = 5):
     prompt = f"""
-Luo tarkalleen 5 monivalintakysymystä seuraavasta tekstistä JSON-muodossa.
+Luo tarkalleen {count} monivalintakysymystä seuraavasta tekstistä JSON-muodossa.
 
 Vastausmuoto on täsmälleen tämä:
 

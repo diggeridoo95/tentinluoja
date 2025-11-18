@@ -40,8 +40,16 @@ def index():
                 error = "Tiedosto on tyhjä tai tekstin poiminta epäonnistui."
                 return render_template('index.html', error=error)
 
-            # Generate questions
-            questions = generate_questions(text)
+            # Lue ja validoi valittu kysymysten määrä (5-20)
+            num_q = request.form.get('num_questions', '5')
+            try:
+                num_q = int(num_q)
+            except (ValueError, TypeError):
+                num_q = 5
+            num_q = max(5, min(20, num_q))
+
+            # Generate questions with requested count
+            questions = generate_questions(text, num_q)
 
             if not questions:
                 error = "Kysymysten generointi epäonnistui. Katso palvelimen loki."
