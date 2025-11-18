@@ -35,7 +35,7 @@ button:hover {
     margin-bottom: 15px;
 }
 
-/* New styles for quiz feedback */
+/* Luokat joita quiz.js käyttää palautteen visualisointiin */
 .option-label {
     display: inline-block;
     padding: 6px 8px;
@@ -51,7 +51,7 @@ button:hover {
 
 .option-label.incorrect {
     background: #f8d7da;
-    border: 1px solid #ff0019;
+    border: 1px solid #dc3545;
 }
 
 .option-label.correct-answer {

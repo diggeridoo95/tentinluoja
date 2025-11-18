@@ -3,22 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>AI Tentti</title>
+    <!-- Tyylit (feedback-luokat jne) -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
         <h1>AI Tentti</h1>
+        <!-- Jos sessiossa ei ole kysymyksiä, näytetään paluu-linkki -->
         {% if not questions %}
             <p>Ei kysymyksiä. Palaa takaisin ja lataa teksti.</p>
             <a href="{{ url_for('index') }}">Takaisin</a>
         {% else %}
+            <!-- Lomake on vain rakenteellinen; client-side skripti hoitaa tarkistuksen -->
             <form id="quizForm" novalidate>
                 {% for q in questions %}
                     {% set qidx = loop.index %}
+                    <!-- data-correct sisältää oikean vastauksen, jota quiz.js käyttää -->
                     <div class="question-block" data-correct="{{ q.correct_answer }}">
                         <p><strong>{{ qidx }}. {{ q.question }}</strong></p>
                         {% for opt in q.options %}
                             <div>
+                                <!-- label ja radio per vaihtoehto; name ryhmittelee kysymyksen radiot -->
                                 <label class="option-label" for="q{{ qidx }}_opt{{ loop.index }}">
                                     <input id="q{{ qidx }}_opt{{ loop.index }}"
                                            type="radio"
@@ -27,21 +32,26 @@
                                 </label>
                             </div>
                         {% endfor %}
+                        <!-- feedback-alue (käytetään näyttämään "Oikein/Väärin/Ei vastausta") -->
                         <p class="feedback" aria-live="polite"></p>
                     </div>
                     <hr>
                 {% endfor %}
                 <div class="controls">
+                    <!-- Tarkista vastaukset suorittaa client-side arvioinnin -->
                     <button type="button" id="checkBtn">Tarkista vastaukset</button>
+                    <!-- Tyhjennä palauttaa lomakkeen alkuperäiseen tilaan -->
                     <button type="button" id="resetBtn">Tyhjennä vastaukset</button>
                     <!-- Paluu index-sivulle -->
                     <button type="button" id="backBtn" onclick=location.href="{{ url_for('index') }}">Takaisin</button>
                 </div>
 
+                <!-- Yhteenveto: pistemäärä näytetään tänne -->
                 <div id="resultSummary" class="result" aria-live="polite"></div>
             </form>
         {% endif %}
     </div>
+    <!-- Client-side skripti hoitaa tarkistuksen ja palautteen näyttämisen ilman sivunvaihtoa -->
     <script src="{{ url_for('static', filename='quiz.js') }}" defer></script>
 </body>
 </html>

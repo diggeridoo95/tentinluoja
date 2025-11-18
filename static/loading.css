@@ -1,4 +1,4 @@
-/* Spinner and loading message for index.html */
+/* Spinner-tyylit index.html:lle, näkyy lomakkeen lähetyksen aikana */
 .loading {
     display: none;
     text-align: center;
